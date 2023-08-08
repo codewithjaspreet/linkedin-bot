@@ -1,3 +1,4 @@
+import csv
 import os
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -5,6 +6,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
 from dotenv import load_dotenv
+import pandas as pd
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -117,7 +119,19 @@ def scrape_people_info():
         print(profile.get_attribute("href"))
 
 
+    make_dataframe(Names , Positions , Links)
     
+def make_dataframe(l1 , l2 , l3):
+
+    
+    rows = zip(l1, l2, l3)
+
+    with open('Linkdin.csv', mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['Header1', 'Header2', 'Header3'])  
+        writer.writerows(rows)
+
+
 
 if __name__ == "__main__":
     search_query = "Data Analyst"

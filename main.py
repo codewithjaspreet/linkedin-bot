@@ -5,6 +5,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
 from dotenv import load_dotenv
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 def linkedin_search(query):
     chromedriver_path = "/Users/jaspreetSinghSodhi/downloads/chromedriver"
@@ -53,13 +55,31 @@ def linkedin_search(query):
         # Press Enter to initiate the search
         search_box.send_keys(Keys.RETURN)
 
+        wait = WebDriverWait(driver, 5)
+        buttons = wait.until(EC.presence_of_all_elements_located((By.XPATH, "//button[@aria-pressed='false']")))
+
+# Check if there are at least 2 buttons that match the XPath selector
+        print(len(buttons))
+        print(buttons)
+
+        buttons[1].click()
+
+
+    #     if len(buttons) >= 2:
+    # # Click the 2nd button
+    #         buttons[2].click()
+    #     else:
+    #         print("There are less than 2 buttons matching the XPath selector.")
+
 
 
        
 
-        search_all_result = driver.find_elements("xpath" ,"//div[@class='search-results__cluster-bottom-banner artdeco-button artdeco-button--tertiary artdeco-button--muted']")
+        # search_all_result = driver.find_elements("xpath" ,"//button[@aria-pressed='false']")
 
-        search_all_result[2].click()
+        # print('total options----' , len(   search_all_result))
+
+        # search_all_result[2].click()
 
     except Exception as e:
         print(f"An error occurred: {e}")
